@@ -15,17 +15,17 @@ exports.handler = async (event) => {
           Charset: "UTF-8",
           Data: event.Records[0].Sns.Message
           },
-          Text: {
-           Charset: "UTF-8",
-           Data: event.Records[0].Sns.Message
-          }
+          // Text: {
+          //  Charset: "UTF-8",
+          //  Data: event.Records[0].Sns.Message
+          // }
          },
          Subject: {
           Charset: 'UTF-8',
-          Data: 'Test email'
+          Data: 'Books Notification'
          }
         },
-      Source: 'urvashijain003@gmail.com'
+      Source: 'noreply@dev.booksbuffet.me'
     };
 
     var sendPromise = new aws.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
