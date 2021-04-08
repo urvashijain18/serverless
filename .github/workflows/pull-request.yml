@@ -40,12 +40,12 @@ jobs:
     - name: Compress the file
       run: |
         ls -al
-        mkdir send-email
+        mkdir send_Email
         ls -al
-        cd send-email
+        cd send_Email
         cp ../send-email.js .
         pwd
-        zip -r send-email.zip .
+        zip -r send_Email.zip .
         ls -al
     
     - name: AWS Lambda update function
