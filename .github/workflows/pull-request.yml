@@ -43,7 +43,7 @@ jobs:
         mkdir send_Email
         ls -al
         cd send_Email
-        cp ../send-email.js .
+        cp send-email/send-email.js .
         pwd
         zip -r send_Email.zip .
         ls -al
