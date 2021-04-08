@@ -46,7 +46,6 @@ jobs:
       run: |
         pwd
         ls -al
-        cd send-email
         aws lambda update-function-code \
         --function-name send-email \
         --zip-file fileb://send-email.zip
