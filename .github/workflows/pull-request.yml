@@ -1,0 +1,58 @@
+name: Lambda CI/CD
+
+on: 
+  push: 
+   
+   branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+    
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps: 
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+          node-version: '14.x'
+  
+    - name: Configure AWS CLI 
+      run: |
+        ls -al
+        cd /home/runner/work/
+        sudo apt install wget zip unzip curl -y
+        sudo apt install unzip -y
+        pwd
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install --update -i /usr/local/aws-cli -b /usr/local/bin
+        mkdir  ~/.aws
+        ls -al
+        aws configure set default.region us-east-1
+        aws configure set aws_access_key_id ${{ secrets.USER_AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.USER_AWS_SECRET_ACCESS_KEY }}
+    
+    - name: Compress the file
+      run: |
+        ls -al
+        mkdir send-email
+        ls -al
+        cd send-email
+        cp ../send-email.js .
+        pwd
+        zip -r send-email.zip .
+        ls -al
+    
+    - name: AWS Lambda update function
+      run: |
+        pwd
+        ls -al
+        cd send-email
+        aws lambda update-function-code \
+        --function-name send-email \
+        --zip-file fileb://send-email.zip
