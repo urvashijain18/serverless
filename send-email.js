@@ -6,19 +6,15 @@ exports.handler = async (event) => {
     var params = {
       Destination: {
         ToAddresses: [
-          'urvashijain003@gmail.com'
+          event.Records[0].Sns.Message.split(' ')[1]
         ]
       },
       Message: { 
         Body: { 
           Html: {
           Charset: "UTF-8",
-          Data: event.Records[0].Sns.Message
+          Data: event.Records[0].Sns.Message+"<br><br><br> <a href="+event.Records[0].Sns.UnsubscribeUrl+">Unsubscribe</a></br></br></br>"
           },
-          // Text: {
-          //  Charset: "UTF-8",
-          //  Data: event.Records[0].Sns.Message
-          // }
          },
          Subject: {
           Charset: 'UTF-8',
