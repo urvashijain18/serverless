@@ -13,7 +13,7 @@ exports.handler = async (event) => {
         Body: { 
           Html: {
           Charset: "UTF-8",
-          Data: event.Records[0].Sns.Message+"<br><br><br> <a href="+event.Records[0].Sns.UnsubscribeUrl+">Unsubscribe</a></br></br></br>"
+          Data: event.Records[0].Sns.Message+"<br><a href="+event.Records[0].Sns.UnsubscribeUrl+">Unsubscribe</a></br>"
           },
          },
          Subject: {
@@ -21,7 +21,7 @@ exports.handler = async (event) => {
           Data: 'Books Notification'
          }
         },
-      Source: 'noreply@dev.booksbuffet.me'
+      Source: 'noreply@prod.booksbuffet.me'
     };
 
     var sendPromise = new aws.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
